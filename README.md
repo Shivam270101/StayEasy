@@ -1,9 +1,13 @@
 Stay Easy ( Hostel Web Application )
+
+
 ****** Abstract ********* 
 In today’s fast-paced urban life, finding affordable and nearby accommodation can be a daunting task for students, working professionals, and travellers. Stay-Easy is a comprehensive web application designed to bridge this gap by providing a seamless and secure platform for users to locate budget-friendly hostels in their preferred vicinity. The application leverages modern web technologies to enhance user experience, security, and efficiency. Security is a top priority in Stay-Easy. 
 
 The core objective of Stay-Easy is to serve as an efficient and reliable solution for individuals looking for affordable accommodations. The application provides user-friendly search filters, allowing users to narrow down their options based on budget, distance, amenities, and availability. The platform also supports hostel owners by offering an intuitive dashboard to manage listings, track bookings, and interact with potential tenants.
 By incorporating advanced technologies, secure authentication mechanisms, and real-time location tracking, Stay-Easy aims to revolutionize the hostel search experience, making it more efficient, secure, and user-centric. The platform’s seamless integration of security features and Google APIs ensures a smooth, reliable, and trustworthy service for all stakeholders in the hostel accommodation ecosystem.
+
+
 
 ****** Objectives ********
 
