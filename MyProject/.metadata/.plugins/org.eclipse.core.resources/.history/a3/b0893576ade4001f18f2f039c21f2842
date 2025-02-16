@@ -1,0 +1,5 @@
+package com.stayeasy.configs;
+
+public class GoogleMapsConfig {
+
+}

@@ -1,0 +1,37 @@
+package com.stayeasy.controller;
+
+
+
+
+import org.springframework.web.bind.annotation.*;
+
+import com.stayeasy.Services.GoogleMapsService;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/hostels")
+public class HostelSearchController {
+    
+    private final GoogleMapsService googleMapsService;
+
+    public HostelSearchController(GoogleMapsService googleMapsService) {
+        this.googleMapsService = googleMapsService;
+    }
+
+    // Search hostels near the user's current location
+    @GetMapping("/nearby")
+    public List<Map<String, Object>> searchHostelsNearUser(
+            @RequestParam double latitude,
+            @RequestParam double longitude) {
+        return googleMapsService.getNearbyHostels(latitude, longitude);
+    }
+
+    // Search hostels near a specific location
+    @GetMapping("/search")
+    public List<Map<String, Object>> searchHostelsByLocation(@RequestParam String location) {
+        return googleMapsService.getHostelsByLocation(location);
+    }
+}
+

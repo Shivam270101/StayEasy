@@ -1,0 +1,89 @@
+package com.stayeasy.Services;
+
+import com.google.maps.DistanceMatrixApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
+import com.google.maps.model.TravelMode;
+import com.stayeasy.dao.HostelDao;
+import com.stayeasy.entity.Hostel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class GoogleMapsService {
+    
+    private final GeoApiContext context;
+    private final HostelDao hostelRepository;
+
+    @Value("${google.maps.api.key}")
+    private String googleApiKey;
+
+    @Autowired
+    public GoogleMapsService(HostelDao hostelRepository) {
+        this.hostelRepository = hostelRepository;
+        this.context = new GeoApiContext.Builder()
+                .apiKey(googleApiKey)  // Use the API key injected from application.properties
+                .build();
+    }
+
+    // Get nearby hostels based on user's current location and radius
+    public List<Hostel> getNearbyHostels(double userLat, double userLng, double radiusKm) {
+        List<Hostel> hostels = hostelRepository.findAll();
+        return hostels.stream()
+                .filter(hostel -> {
+                    double distance = calculateDistance(userLat, userLng,
+                            hostel.getLocation().getLatitude(), hostel.getLocation().getLongitude());
+                    return distance <= radiusKm;
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Calculate the distance between two points using Google Maps API
+    public double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+        try {
+            DistanceMatrix result = DistanceMatrixApi.newRequest(context)
+                    .origins(lat1 + "," + lng1)
+                    .destinations(lat2 + "," + lng2)
+                    .mode(TravelMode.DRIVING)
+                    .await();
+
+            if (result.rows.length > 0) {
+                DistanceMatrixRow row = result.rows[0];
+                if (row.elements.length > 0) {
+                    DistanceMatrixElement element = row.elements[0];
+                    if (element.distance != null) {
+                        return element.distance.inMeters / 1000.0; // Convert meters to kilometers
+                    }
+                }
+            }
+            return Double.MAX_VALUE; // Return large value if distance is not found
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Double.MAX_VALUE; // Return large value in case of error
+        }
+    }
+
+    // Assuming you would need to implement this to search hostels by location
+    public List<Hostel> getHostelsByLocation(double latitude, double longitude, double radiusKm) {
+        return hostelRepository.findHostelsByLocation(latitude, longitude, radiusKm);
+}
+
+//    public double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+//        String url = String.format("https://maps.googleapis.com/maps/api/distancematrix/json?origins=%f,%f&destinations=%f,%f&key=%s",
+//                lat1, lng1, lat2, lng2, googleApiKey);
+//
+//        DistanceMatrixResponse response = restTemplate.getForObject(url, DistanceMatrixResponse.class);
+//        if (response != null && !response.getRows().isEmpty() && !response.getRows().get(0).getElements().isEmpty()) {
+//            return response.getRows().get(0).getElements().get(0).getDistance().getValue() / 1000.0;
+//        }
+//        return Double.MAX_VALUE;
+//    }
+}
+
+

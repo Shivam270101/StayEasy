@@ -1,0 +1,24 @@
+package com.stayeasy.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.stayeasy.dao.HostelDao;
+import com.stayeasy.entity.Hostel;
+
+@RestController
+@RequestMapping("/api/hostels")
+public class HostelController {
+	   @Autowired
+	    private HostelDao hostelRepo;
+
+//	    @GetMapping("/nearby")
+//	    public List<Hostel> getNearbyHostels(@RequestParam double lat, @RequestParam double lng) {
+//	        return hostelRepo.findHostelsByLocation(lat, lng);
+//	    }
+}

@@ -1,0 +1,9 @@
+package com.stayeasy.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.stayeasy.entity.User;
+
+public interface BookingDao extends JpaRepository<User,Long>{
+
+}

@@ -1,0 +1,5 @@
+package com.stayeasy.entity;
+
+public class BookingStatus {
+
+}

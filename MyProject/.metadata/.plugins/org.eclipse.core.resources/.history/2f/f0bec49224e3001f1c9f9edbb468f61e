@@ -1,0 +1,12 @@
+package com.stayeasy.dao;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class HostelDao {
+	  @Query(value = "SELECT * FROM hostel h " +
+              "WHERE (6371 * ACOS(COS(RADIANS(:lat)) * COS(RADIANS(h.latitude)) * " +
+              "COS(RADIANS(h.longitude) - RADIANS(:lng)) + SIN(RADIANS(:lat)) * " +
+              "SIN(RADIANS(h.latitude)))) <= 5", nativeQuery = true)
+List<Hostel> findHostelsByLocation(@Param("lat") double lat, @Param("lng") double lng);
+}
