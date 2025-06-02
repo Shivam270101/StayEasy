@@ -3,7 +3,7 @@ Project
 
 Stay Easy ( Hostel Management Application )
 Role based Web Application (User, Admin)
-
+ 
  
 In today’s fast-paced urban life, finding affordable and nearby accommodation can be a daunting task for students, working professionals, and travellers. Stay-Easy is a comprehensive web application designed to bridge this gap by providing a seamless and secure platform for users to locate budget-friendly hostels in their preferred vicinity. The application leverages modern web technologies to enhance user experience, security, and efficiency. Security is a top priority in Stay-Easy. 
 
